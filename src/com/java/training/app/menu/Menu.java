@@ -1,26 +1,21 @@
 package com.java.training.app.menu;
 
-
+import com.java.training.app.file.File;
 import com.java.training.app.model.User;
 import com.java.training.app.reader.Reader;
 import com.java.training.app.storage.Storage;
+import com.java.training.app.validator.Validator;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Menu {
 
     private static final Storage STORAGE = new Storage();
     private static final Reader READER = new Reader();
-    private static final String REGEX_FOR_PHONE_NUMBERS;
-    private static final String REGEX_FOR_EMAIL;
-    private static Pattern pattern;
-    private static Matcher matcher;
-
+    private static final Validator VALIDATOR = new Validator();
+    private static final File FILE = new File();
 
     public static void run() {
         final Menu menu = new Menu();
@@ -33,12 +28,6 @@ public class Menu {
                 System.err.println(e.getMessage());
             }
         }
-    }
-
-    static {
-        REGEX_FOR_PHONE_NUMBERS = "\\d{5}\\u0020\\d{7}";
-        REGEX_FOR_EMAIL = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@ [A-Za-z0-9]+" +
-                "(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     }
 
     public void printMenu() {
@@ -76,25 +65,26 @@ public class Menu {
                 findAllUsers();
                 break;
             case 5:
-                updateUser();
+                STORAGE.updateUser();
                 break;
             case 6:
-                createNewFileTxt();
+                FILE.createNewFileTxt();
                 break;
             case 7:
-                addTextToFile();
+                FILE.addTextToFile();
                 break;
             case 8:
-                readFile();
+                FILE.readFile();
                 break;
             case 9:
-                updateFile();
+                FILE.updateFile();
                 break;
             case 10:
-                deleteFile();
+                FILE.deleteFile();
                 break;
             case 0:
                 System.exit(0);
+                break;
             default:
                 System.out.println("no such operations");
         }
@@ -104,51 +94,12 @@ public class Menu {
         final String firstName = READER.readLine("input first name: ");
         final String lastName = READER.readLine("input Last name: ");
         String email = READER.readLine("input new Email: ");
-        while (!validateEmail(email)) {
+        while (!VALIDATOR.validateEmail(email)) {
             email = READER.readLine("invalid email. Try again:");
         }
-        final List<String> numbers = findPhoneNumbers();
+        final List<String> numbers = STORAGE.findPhoneNumbers();
         final User user = new User(firstName, lastName, email, numbers);
         STORAGE.addUser(user);
-    }
-
-    private List<String> findPhoneNumbers() {
-        final int i = 0;
-        final List<String> numbers = new ArrayList<>();
-        int amountOfNumbers = enterAmountOfPhoneNumbers();
-
-        while (amountOfNumbers > 0) {
-            String number = READER.readLine("Enter phone number: ");
-            while (!validateNumber(number)) {
-                number = READER.readLine("invalid number. Try again:");
-            }
-            numbers.add(number);
-            amountOfNumbers--;
-        }
-        return numbers;
-    }
-
-    private int enterAmountOfPhoneNumbers() {
-        while (true) {
-            final int amountOfNumbers = READER.readInt("how many phone numbers do you want to enter: ");
-            if (amountOfNumbers <= 0 || amountOfNumbers > 3) {
-                System.out.println("invalid number. Try again. ");
-            } else {
-                return amountOfNumbers;
-            }
-        }
-    }
-
-    private boolean validateNumber(final String number) {
-        pattern = Pattern.compile(REGEX_FOR_PHONE_NUMBERS);
-        matcher = pattern.matcher(number);
-        return matcher.matches();
-    }
-
-    private boolean validateEmail(final String email) {
-        pattern = Pattern.compile(REGEX_FOR_EMAIL);
-        matcher = pattern.matcher(email);
-        return matcher.matches();
     }
 
     private void findUser() {
@@ -173,42 +124,6 @@ public class Menu {
         } else {
             foundedUsers.forEach(System.out::println);
         }
-    }
-
-    private void updateUser() {
-        final String findName = READER.readLine("input user name: ");
-        final String inputFirstName = READER.readLine("input new first name: ");
-        final String inputLastName = READER.readLine("input new last name: ");
-        final String inputEmail = READER.readLine("input new Email: ");
-        final long id = STORAGE.findByFirstName(findName).getId();
-        final List<String> numbers = findPhoneNumbers();
-        final User newUser = new User(id, inputFirstName, inputLastName, inputEmail, numbers);
-        STORAGE.changeUser(findName, newUser);
-    }
-
-    private void createNewFileTxt() throws IOException {
-        final String fileName = READER.readLine("Enter file name: ");
-        STORAGE.createNewFileTxt(fileName);
-    }
-
-    private void addTextToFile() throws IOException {
-        final String fileName = READER.readLine("Enter file name: ");
-        STORAGE.addUsersToFile(fileName);
-    }
-
-    private void readFile() throws IOException {
-        final String fileName = READER.readLine("Enter file name: ");
-        STORAGE.readFile(fileName);
-    }
-
-    private void updateFile() throws IOException {
-        final String fileName = READER.readLine("Enter file name: ");
-        STORAGE.updateFile(fileName);
-    }
-
-    private void deleteFile() throws IOException {
-        final String fileName = READER.readLine("Enter file name: ");
-        STORAGE.deleteFile(fileName);
     }
 }
 

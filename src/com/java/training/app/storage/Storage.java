@@ -1,6 +1,8 @@
 package com.java.training.app.storage;
 
 import com.java.training.app.model.User;
+import com.java.training.app.reader.Reader;
+import com.java.training.app.validator.Validator;
 
 import java.io.File;
 import java.io.FileReader;
@@ -13,6 +15,8 @@ import java.util.Scanner;
 
 public class Storage {
 
+    private static final Validator VALIDATOR = new Validator();
+    private static final Reader READER = new Reader();
     private final List<User> users = new ArrayList<>();
 
     public void addUser(final User user) {
@@ -72,5 +76,40 @@ public class Storage {
         sourceFile.delete();
     }
 
+    public List<String> findPhoneNumbers() {
+        final List<String> numbers = new ArrayList<>();
+        int amountOfNumbers = enterAmountOfPhoneNumbers();
 
+        while (amountOfNumbers > 0) {
+            String number = READER.readLine("Enter phone number: ");
+            while (!VALIDATOR.validateNumber(number)) {
+                number = READER.readLine("invalid number. Try again:");
+            }
+            numbers.add(number);
+            amountOfNumbers--;
+        }
+        return numbers;
+    }
+
+    public void updateUser() {
+        final String findName = READER.readLine("input username: ");
+        final String inputFirstName = READER.readLine("input new first name: ");
+        final String inputLastName = READER.readLine("input new last name: ");
+        final String inputEmail = READER.readLine("input new Email: ");
+        final long id = findByFirstName(findName).getId();
+        final List<String> numbers = findPhoneNumbers();
+        final User newUser = new User(id, inputFirstName, inputLastName, inputEmail, numbers);
+        changeUser(findName, newUser);
+    }
+
+    private int enterAmountOfPhoneNumbers() {
+        while (true) {
+            final int amountOfNumbers = READER.readInt("how many phone numbers do you want to enter: ");
+            if (amountOfNumbers <= 0 || amountOfNumbers > 3) {
+                System.out.println("invalid number. Try again. ");
+            } else {
+                return amountOfNumbers;
+            }
+        }
+    }
 }

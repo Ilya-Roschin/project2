@@ -1,14 +1,15 @@
 package com.java.training.app.model;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 public class User {
 
-    private final List<String> numbers;
     private final String firstName;
     private final String lastName;
     private final String email;
+    private final List<String> numbers;
     private final long id;
 
     public User(final String firstName, final String lastName, final String email, final List<String> numbers) {
@@ -52,11 +53,10 @@ public class User {
     }
 
     public List<String> getMobileNumber() {
-        return numbers;
+        return Collections.unmodifiableList(numbers);
     }
 
     public long getId() {
         return id;
     }
-
 }
