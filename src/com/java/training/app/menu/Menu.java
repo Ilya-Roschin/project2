@@ -23,13 +23,13 @@ public class Menu {
 
 
     public static void run() {
-        Menu menu = new Menu();
+        final Menu menu = new Menu();
         while (true) {
             try {
                 menu.printMenu();
-                int choice = menu.readMenu();
+                final int choice = menu.readMenu();
                 menu.makeChoice(choice);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 System.err.println(e.getMessage());
             }
         }
@@ -57,11 +57,11 @@ public class Menu {
     }
 
     public int readMenu() {
-        Scanner scanner = new Scanner(System.in);
+        final Scanner scanner = new Scanner(System.in);
         return scanner.nextInt();
     }
 
-    public void makeChoice(int choice) throws IOException {
+    public void makeChoice(final int choice) throws IOException {
         switch (choice) {
             case 1:
                 addUser();
@@ -101,20 +101,20 @@ public class Menu {
     }
 
     private void addUser() {
-        String firstName = READER.readLine("input first name: ");
-        String lastName = READER.readLine("input Last name: ");
+        final String firstName = READER.readLine("input first name: ");
+        final String lastName = READER.readLine("input Last name: ");
         String email = READER.readLine("input new Email: ");
         while (!validateEmail(email)) {
             email = READER.readLine("invalid email. Try again:");
         }
-        List<String> numbers = findPhoneNumbers();
-        User user = new User(firstName, lastName, email, numbers);
+        final List<String> numbers = findPhoneNumbers();
+        final User user = new User(firstName, lastName, email, numbers);
         STORAGE.addUser(user);
     }
 
     private List<String> findPhoneNumbers() {
-        int i = 0;
-        List<String> numbers = new ArrayList<>();
+        final int i = 0;
+        final List<String> numbers = new ArrayList<>();
         int amountOfNumbers = enterAmountOfPhoneNumbers();
 
         while (amountOfNumbers > 0) {
@@ -130,7 +130,7 @@ public class Menu {
 
     private int enterAmountOfPhoneNumbers() {
         while (true) {
-            int amountOfNumbers = READER.readInt("how many phone numbers do you want to enter: ");
+            final int amountOfNumbers = READER.readInt("how many phone numbers do you want to enter: ");
             if (amountOfNumbers <= 0 || amountOfNumbers > 3) {
                 System.out.println("invalid number. Try again. ");
             } else {
@@ -139,27 +139,27 @@ public class Menu {
         }
     }
 
-    private boolean validateNumber(String number) {
+    private boolean validateNumber(final String number) {
         pattern = Pattern.compile(REGEX_FOR_PHONE_NUMBERS);
         matcher = pattern.matcher(number);
         return matcher.matches();
     }
 
-    private boolean validateEmail(String email) {
+    private boolean validateEmail(final String email) {
         pattern = Pattern.compile(REGEX_FOR_EMAIL);
         matcher = pattern.matcher(email);
         return matcher.matches();
     }
 
     private void findUser() {
-        String firstName = READER.readLine("Enter user name: ");
-        User foundUser = STORAGE.findByFirstName(firstName);
+        final String firstName = READER.readLine("Enter user name: ");
+        final User foundUser = STORAGE.findByFirstName(firstName);
         System.out.println(foundUser);
     }
 
     private void deleteUser() {
         String message = "User not found";
-        String name = READER.readLine("Enter user name: ");
+        final String name = READER.readLine("Enter user name: ");
         if (STORAGE.deleteUser(name)) {
             message = "User deleted";
         }
@@ -167,7 +167,7 @@ public class Menu {
     }
 
     private void findAllUsers() {
-        List<User> foundedUsers = STORAGE.findAllUsers();
+        final List<User> foundedUsers = STORAGE.findAllUsers();
         if (foundedUsers.size() == 0) {
             System.out.println("No users!");
         } else {
@@ -176,38 +176,38 @@ public class Menu {
     }
 
     private void updateUser() {
-        String findName = READER.readLine("input user name: ");
-        String inputFirstName = READER.readLine("input new first name: ");
-        String inputLastName = READER.readLine("input new last name: ");
-        String inputEmail = READER.readLine("input new Email: ");
-        long id = STORAGE.findByFirstName(findName).getId();
-        List<String> numbers = findPhoneNumbers();
-        User newUser = new User(id, inputFirstName, inputLastName, inputEmail, numbers);
+        final String findName = READER.readLine("input user name: ");
+        final String inputFirstName = READER.readLine("input new first name: ");
+        final String inputLastName = READER.readLine("input new last name: ");
+        final String inputEmail = READER.readLine("input new Email: ");
+        final long id = STORAGE.findByFirstName(findName).getId();
+        final List<String> numbers = findPhoneNumbers();
+        final User newUser = new User(id, inputFirstName, inputLastName, inputEmail, numbers);
         STORAGE.changeUser(findName, newUser);
     }
 
     private void createNewFileTxt() throws IOException {
-        String fileName = READER.readLine("Enter file name: ");
+        final String fileName = READER.readLine("Enter file name: ");
         STORAGE.createNewFileTxt(fileName);
     }
 
     private void addTextToFile() throws IOException {
-        String fileName = READER.readLine("Enter file name: ");
+        final String fileName = READER.readLine("Enter file name: ");
         STORAGE.addUsersToFile(fileName);
     }
 
     private void readFile() throws IOException {
-        String fileName = READER.readLine("Enter file name: ");
+        final String fileName = READER.readLine("Enter file name: ");
         STORAGE.readFile(fileName);
     }
 
     private void updateFile() throws IOException {
-        String fileName = READER.readLine("Enter file name: ");
+        final String fileName = READER.readLine("Enter file name: ");
         STORAGE.updateFile(fileName);
     }
 
     private void deleteFile() throws IOException {
-        String fileName = READER.readLine("Enter file name: ");
+        final String fileName = READER.readLine("Enter file name: ");
         STORAGE.deleteFile(fileName);
     }
 }

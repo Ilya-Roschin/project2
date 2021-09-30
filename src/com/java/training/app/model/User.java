@@ -11,7 +11,7 @@ public class User {
     private final String email;
     private final long id;
 
-    public User(String firstName, String lastName, String email, List<String> numbers) {
+    public User(final String firstName, final String lastName, final String email, final List<String> numbers) {
         this.id = UUID.randomUUID().getMostSignificantBits();
         this.firstName = firstName;
         this.lastName = lastName;
@@ -19,7 +19,8 @@ public class User {
         this.numbers = numbers;
     }
 
-    public User(long id, String firstName, String lastName, String email, List<String> numbers) {
+    public User(final long id, final String firstName, final String lastName,
+                final String email, final List<String> numbers) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

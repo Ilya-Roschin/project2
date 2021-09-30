@@ -6,12 +6,12 @@ public class Reader {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public String readLine(String message) {
+    public String readLine(final String message) {
         System.out.println(message);
         return SCANNER.nextLine();
     }
 
-    public int readInt(String message) {
+    public int readInt(final String message) {
         System.out.println(message);
         return SCANNER.nextInt();
     }

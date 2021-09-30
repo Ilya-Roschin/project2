@@ -19,14 +19,14 @@ public class Storage {
         users.add(user);
     }
 
-    public User findByFirstName(String name) {
+    public User findByFirstName(final String name) {
         return users.stream()
                 .filter(user -> name.equals(user.getFirstName()))
                 .findFirst()
                 .get();
     }
 
-    public boolean deleteUser(String firstName) {
+    public boolean deleteUser(final String firstName) {
         return users.removeIf(user -> firstName.equals(user.getFirstName()));
     }
 
@@ -42,33 +42,33 @@ public class Storage {
         return new FileWriter("resources\\" + name + ".txt");
     }
 
-    public void addUsersToFile(String fileName) throws IOException {
-        FileWriter file = new FileWriter("resources\\" + fileName + ".txt");
-        StringBuilder text = new StringBuilder();
-        for (User element : users) {
+    public void addUsersToFile(final String fileName) throws IOException {
+        final FileWriter file = new FileWriter("resources\\" + fileName + ".txt");
+        final StringBuilder text = new StringBuilder();
+        for (final User element : users) {
             text.append(element.toString());
         }
         file.write(text.toString());
         file.close();
     }
 
-    public void readFile(String fileName) throws IOException {
-        FileReader readFile = new FileReader("resources\\" + fileName + ".txt");
-        Scanner scan = new Scanner(readFile);
+    public void readFile(final String fileName) throws IOException {
+        final FileReader readFile = new FileReader("resources\\" + fileName + ".txt");
+        final Scanner scan = new Scanner(readFile);
         while (scan.hasNextLine()) {
             System.out.println(scan.nextLine());
         }
         readFile.close();
     }
 
-    public void updateFile(String fileName) throws IOException {
+    public void updateFile(final String fileName) throws IOException {
         deleteFile(fileName);
         createNewFileTxt(fileName);
         addUsersToFile(fileName);
     }
 
-    public void deleteFile(String fileName) throws IOException {
-        File sourceFile = new File("resources\\" + fileName + ".txt");
+    public void deleteFile(final String fileName) throws IOException {
+        final File sourceFile = new File("resources\\" + fileName + ".txt");
         sourceFile.delete();
     }
 
