@@ -3,6 +3,7 @@ package com.java.training.app.storage;
 import com.java.training.app.model.User;
 import com.java.training.app.reader.Reader;
 import com.java.training.app.validator.Validator;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -90,6 +91,17 @@ public class Storage {
         return numbers;
     }
 
+    private int enterAmountOfPhoneNumbers() {
+        while (true) {
+            final int amountOfNumbers = READER.readInt("how many phone numbers do you want to enter: ");
+            if (amountOfNumbers <= 0 || amountOfNumbers > 3) {
+                System.out.println("invalid number. Try again. ");
+            } else {
+                return amountOfNumbers;
+            }
+        }
+    }
+
     public void updateUser() {
         final String findName = READER.readLine("input username: ");
         final String inputFirstName = READER.readLine("input new first name: ");
@@ -101,14 +113,5 @@ public class Storage {
         changeUser(findName, newUser);
     }
 
-    private int enterAmountOfPhoneNumbers() {
-        while (true) {
-            final int amountOfNumbers = READER.readInt("how many phone numbers do you want to enter: ");
-            if (amountOfNumbers <= 0 || amountOfNumbers > 3) {
-                System.out.println("invalid number. Try again. ");
-            } else {
-                return amountOfNumbers;
-            }
-        }
-    }
+
 }
