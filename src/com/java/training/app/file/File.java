@@ -35,8 +35,4 @@ public class File {
         final String fileName = READER.readLine(TEXT);
         STORAGE.deleteFile(fileName);
     }
-
-
-
-
 }

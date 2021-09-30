@@ -15,5 +15,4 @@ public class Reader {
         System.out.println(message);
         return SCANNER.nextInt();
     }
-
 }
