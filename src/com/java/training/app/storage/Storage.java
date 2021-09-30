@@ -3,7 +3,6 @@ package com.java.training.app.storage;
 import com.java.training.app.model.User;
 import com.java.training.app.reader.Reader;
 import com.java.training.app.validator.Validator;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;

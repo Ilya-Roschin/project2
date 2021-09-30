@@ -2,7 +2,6 @@ package com.java.training.app.file;
 
 import com.java.training.app.storage.Storage;
 import com.java.training.app.reader.Reader;
-
 import java.io.IOException;
 
 public class File {

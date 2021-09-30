@@ -5,7 +5,6 @@ import com.java.training.app.model.User;
 import com.java.training.app.reader.Reader;
 import com.java.training.app.storage.Storage;
 import com.java.training.app.validator.Validator;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
