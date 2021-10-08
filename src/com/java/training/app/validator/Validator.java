@@ -9,8 +9,8 @@ public class Validator {
     private Matcher matcher;
 
     private static final String REGEX_FOR_PHONE_NUMBERS = "\\d{5}\\u0020\\d{7}";
-    private static final String REGEX_FOR_EMAIL = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@ [A-Za-z0-9]+" +
-            "(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    private static final String REGEX_FOR_EMAIL =  "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
+            "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     public boolean validateNumber(final String number) {
         pattern = Pattern.compile(REGEX_FOR_PHONE_NUMBERS);

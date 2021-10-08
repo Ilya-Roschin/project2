@@ -8,26 +8,38 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLClientInfoException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class Storage {
 
     private static final Validator VALIDATOR = new Validator();
     private static final Reader READER = new Reader();
-    private final List<User> users = new ArrayList<>();
+    private final List<User> users;
+
+    public Storage() {
+        this.users = new ArrayList<>();
+    }
+
+    public Storage(final List<User> users ) {
+        this.users = users;
+    }
 
     public void addUser(final User user) {
         users.add(user);
     }
 
-    public User findByFirstName(final String name) {
+    public Optional<User> findByFirstName(final String name) {
         return users.stream()
                 .filter(user -> name.equals(user.getFirstName()))
-                .findFirst()
-                .get();
+                .findFirst();
+
     }
 
     public boolean deleteUser(final String firstName) {
@@ -107,7 +119,12 @@ public class Storage {
         final String inputFirstName = READER.readLine("input new first name: ");
         final String inputLastName = READER.readLine("input new last name: ");
         final String inputEmail = READER.readLine("input new Email: ");
-        final long id = findByFirstName(findName).getId();
+        final long id;
+        if (findByFirstName(findName).isPresent()) {
+            id = findByFirstName(findName).get().getId();
+        } else {
+            throw new RuntimeException();
+        }
         final List<String> numbers = findPhoneNumbers();
         final User newUser = new User(id, inputFirstName, inputLastName, inputEmail, numbers);
         changeUser(findName, newUser);
