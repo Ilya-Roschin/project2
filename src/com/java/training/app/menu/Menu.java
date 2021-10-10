@@ -1,11 +1,11 @@
 package com.java.training.app.menu;
 
-import com.java.training.app.file.FileService;
+
 import com.java.training.app.model.User;
 import com.java.training.app.reader.Reader;
-import com.java.training.app.storage.Storage;
+import com.java.training.app.storage.FileService;
+import com.java.training.app.storage.PhoneNumberService;
 import com.java.training.app.validator.Validator;
-import com.java.training.app.storage.FileService1;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,13 +14,12 @@ import java.util.Scanner;
 
 public class Menu {
 
-    private static final Storage STORAGE = new Storage();
+    private static final PhoneNumberService STORAGE = new PhoneNumberService();
     private static final Reader READER = new Reader();
     private static final Validator VALIDATOR = new Validator();
-    private static final FileService FILE = new FileService();
-    private static final FileService1 FILE_SERVICE_1 = new FileService1();
+    private static final FileService FILE_SERVICE_1 = new FileService();
 
-    public static void run() throws IOException {
+    public static void run() {
         final Menu menu = new Menu();
         try {
             while (true) {
@@ -74,7 +73,7 @@ public class Menu {
         }
     }
 
-    private void addUser() {
+    private void addUser() throws IOException {
         final String firstName = READER.readLine("input first name: ");
         final String lastName = READER.readLine("input Last name: ");
         String email = READER.readLine("input new Email: ");
@@ -83,14 +82,13 @@ public class Menu {
         }
         final List<String> numbers = STORAGE.findPhoneNumbers();
         final User user = new User(firstName, lastName, email, numbers);
-        STORAGE.addUser(user);
+        FILE_SERVICE_1.addUserToFile(user);
     }
 
     private void findUser() throws IOException {
         final String firstName = READER.readLine("Enter user name: ");
         final Optional<User> foundUser = FILE_SERVICE_1.findByFirstName(firstName);
         foundUser.ifPresent(System.out::println);
-
     }
 
     private void deleteUser() throws IOException {

@@ -8,7 +8,8 @@ public class Validator {
     private Pattern pattern;
     private Matcher matcher;
 
-    private static final String REGEX_FOR_PHONE_NUMBERS = "\\d{5}\\u0020\\d{7}";
+    private static final String REGEX_FOR_PHONE_NUMBERS = "\\d{12}";
+    //private static final String REGEX_FOR_PHONE_NUMBERS = "\\d{5}\\u0020\\d{7}";
     private static final String REGEX_FOR_EMAIL =  "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
             "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 

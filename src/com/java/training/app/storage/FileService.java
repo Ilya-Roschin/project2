@@ -1,7 +1,6 @@
 package com.java.training.app.storage;
 
 import com.java.training.app.model.User;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class FileService1 {
+public class FileService {
 
     private static final String FILE_PATH = "C:\\projects\\project2\\src\\com\\java\\training\\app\\resource\\storage.txt";
 
@@ -31,7 +30,6 @@ public class FileService1 {
     }
 
     public Optional<User> findByFirstName(final String name) throws IOException {
-
         return findAllUsers().stream()
                 .filter(user -> name.equals(user.getFirstName()))
                 .findFirst();

@@ -2,7 +2,8 @@ package com.java.training.app.model;
 
 import java.util.List;
 import java.util.UUID;
-import static java.util.Collections.*;
+
+import static java.util.Collections.unmodifiableList;
 
 public class User {
 
