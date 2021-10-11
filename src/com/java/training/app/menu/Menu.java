@@ -1,11 +1,12 @@
 package com.java.training.app.menu;
 
-
 import com.java.training.app.model.User;
+import com.java.training.app.model.UserRole;
 import com.java.training.app.reader.Reader;
-import com.java.training.app.storage.FileService;
-import com.java.training.app.storage.PhoneNumberService;
-import com.java.training.app.validator.Validator;
+import com.java.training.app.service.FileService;
+import com.java.training.app.service.PhoneNumberService;
+import com.java.training.app.service.UserRoleService;
+import com.java.training.app.validator.impl.ValidatorImpl;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,10 +15,11 @@ import java.util.Scanner;
 
 public class Menu {
 
-    private static final PhoneNumberService STORAGE = new PhoneNumberService();
+    private static final PhoneNumberService PHONE_NUMBER_SERVICE = new PhoneNumberService();
     private static final Reader READER = new Reader();
-    private static final Validator VALIDATOR = new Validator();
-    private static final FileService FILE_SERVICE_1 = new FileService();
+    private static final ValidatorImpl VALIDATOR_IMPL = new ValidatorImpl();
+    private static final FileService FILE_SERVICE = new FileService();
+    private static final UserRoleService USER_ROLE_SERVICE = new UserRoleService();
 
     public static void run() {
         final Menu menu = new Menu();
@@ -63,7 +65,7 @@ public class Menu {
                 findAllUsers();
                 break;
             case 5:
-                FILE_SERVICE_1.readFile();
+                FILE_SERVICE.readFile();
                 break;
             case 0:
                 System.exit(0);
@@ -74,35 +76,40 @@ public class Menu {
     }
 
     private void addUser() throws IOException {
+
+        String role = READER.readLine("input User role: ");
+        while (!USER_ROLE_SERVICE.isRole(role)) {
+            role = READER.readLine("invalid role. Enter role again:");
+        }
         final String firstName = READER.readLine("input first name: ");
         final String lastName = READER.readLine("input Last name: ");
         String email = READER.readLine("input new Email: ");
-        while (!VALIDATOR.validateEmail(email)) {
-            email = READER.readLine("invalid email. Try again:");
+        while (!VALIDATOR_IMPL.validateEmail(email)) {
+            email = READER.readLine("invalid email. Enter email again:");
         }
-        final List<String> numbers = STORAGE.findPhoneNumbers();
-        final User user = new User(firstName, lastName, email, numbers);
-        FILE_SERVICE_1.addUserToFile(user);
+        final List<String> numbers = PHONE_NUMBER_SERVICE.findPhoneNumbers();
+        final User user = new User(role, firstName, lastName, email, numbers);
+        FILE_SERVICE.addUserToFile(user);
     }
 
-    private void findUser() throws IOException {
+    private void findUser() {
         final String firstName = READER.readLine("Enter user name: ");
-        final Optional<User> foundUser = FILE_SERVICE_1.findByFirstName(firstName);
+        final Optional<User> foundUser = FILE_SERVICE.findByFirstName(firstName);
         foundUser.ifPresent(System.out::println);
     }
 
     private void deleteUser() throws IOException {
         String message = "User not found";
         final String name = READER.readLine("Enter user name: ");
-        if (FILE_SERVICE_1.deleteUser(name)) {
+        if (FILE_SERVICE.deleteUser(name)) {
             message = "User deleted";
         }
         System.out.println(message);
     }
 
     private void findAllUsers() throws IOException {
-        final List<User> foundedUsers = FILE_SERVICE_1.findAllUsers();
-        if (foundedUsers.size() == 0) {
+        final List<User> foundedUsers = FILE_SERVICE.findAllUsers();
+        if (foundedUsers.isEmpty()) {
             System.out.println("No users!");
         } else {
             foundedUsers.forEach(System.out::println);
