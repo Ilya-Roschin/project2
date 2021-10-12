@@ -1,25 +1,14 @@
 package com.java.training.app.menu;
 
-import com.java.training.app.model.User;
-import com.java.training.app.model.UserRole;
-import com.java.training.app.reader.Reader;
 import com.java.training.app.service.FileService;
-import com.java.training.app.service.PhoneNumberService;
-import com.java.training.app.service.UserRoleService;
-import com.java.training.app.validator.impl.ValidatorImpl;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
 public class Menu {
 
-    private static final PhoneNumberService PHONE_NUMBER_SERVICE = new PhoneNumberService();
-    private static final Reader READER = new Reader();
-    private static final ValidatorImpl VALIDATOR_IMPL = new ValidatorImpl();
     private static final FileService FILE_SERVICE = new FileService();
-    private static final UserRoleService USER_ROLE_SERVICE = new UserRoleService();
+    private static final ApplicationMenu APPLICATION_MENU = new ApplicationMenu();
 
     public static void run() {
         final Menu menu = new Menu();
@@ -53,16 +42,16 @@ public class Menu {
     public void makeChoice(final int choice) throws IOException {
         switch (choice) {
             case 1:
-                addUser();
+                APPLICATION_MENU.addUser();
                 break;
             case 2:
-                findUser();
+                APPLICATION_MENU.findUser();
                 break;
             case 3:
-                deleteUser();
+                APPLICATION_MENU.deleteUser();
                 break;
             case 4:
-                findAllUsers();
+                APPLICATION_MENU.findAllUsers();
                 break;
             case 5:
                 FILE_SERVICE.readFile();
@@ -72,47 +61,6 @@ public class Menu {
                 break;
             default:
                 System.out.println("no such operations");
-        }
-    }
-
-    private void addUser() throws IOException {
-
-        String role = READER.readLine("input User role: ");
-        while (!USER_ROLE_SERVICE.isRole(role)) {
-            role = READER.readLine("invalid role. Enter role again:");
-        }
-        final String firstName = READER.readLine("input first name: ");
-        final String lastName = READER.readLine("input Last name: ");
-        String email = READER.readLine("input new Email: ");
-        while (!VALIDATOR_IMPL.validateEmail(email)) {
-            email = READER.readLine("invalid email. Enter email again:");
-        }
-        final List<String> numbers = PHONE_NUMBER_SERVICE.findPhoneNumbers();
-        final User user = new User(role, firstName, lastName, email, numbers);
-        FILE_SERVICE.addUserToFile(user);
-    }
-
-    private void findUser() {
-        final String firstName = READER.readLine("Enter user name: ");
-        final Optional<User> foundUser = FILE_SERVICE.findByFirstName(firstName);
-        foundUser.ifPresent(System.out::println);
-    }
-
-    private void deleteUser() throws IOException {
-        String message = "User not found";
-        final String name = READER.readLine("Enter user name: ");
-        if (FILE_SERVICE.deleteUser(name)) {
-            message = "User deleted";
-        }
-        System.out.println(message);
-    }
-
-    private void findAllUsers() throws IOException {
-        final List<User> foundedUsers = FILE_SERVICE.findAllUsers();
-        if (foundedUsers.isEmpty()) {
-            System.out.println("No users!");
-        } else {
-            foundedUsers.forEach(System.out::println);
         }
     }
 }

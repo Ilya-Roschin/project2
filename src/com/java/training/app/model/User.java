@@ -20,7 +20,7 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.numbers = numbers;
-        this.role = UserRole.USER.toString();
+        this.role = role.toString();
     }
 
     public User(final long id, final UserRole role, final String firstName, final String lastName,

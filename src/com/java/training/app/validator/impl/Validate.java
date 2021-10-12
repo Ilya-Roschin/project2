@@ -5,7 +5,7 @@ import com.java.training.app.validator.Validator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ValidatorImpl implements Validator {
+public class Validate implements Validator {
 
     private Pattern pattern;
     private Matcher matcher;

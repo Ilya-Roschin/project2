@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 
 public class FileService {
 
-    private static final String FILE_PATH = "resources.storage.txt";
+    private static final String FILE_PATH = "resources\\storage.txt";
 
     public List<User> findAllUsers() {
         final List<String> text = fileToStringList(FILE_PATH);
@@ -37,9 +37,9 @@ public class FileService {
     }
 
     public void addUserToFile(final User user) throws IOException {
-        try (final FileWriter file = new FileWriter(FILE_PATH)) {
-            file.write(user.toString());
-        }
+        List<User> users = findAllUsers();
+        users.add(user);
+        addUsersToFile(users);
     }
 
     public void addUsersToFile(final List<User> users) throws IOException {

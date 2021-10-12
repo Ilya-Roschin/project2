@@ -1,15 +1,24 @@
 package com.java.training.app.service;
 
 import com.java.training.app.reader.Reader;
-import com.java.training.app.validator.impl.ValidatorImpl;
+import com.java.training.app.validator.impl.Validate;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PhoneNumberService {
 
-    private static final ValidatorImpl VALIDATOR_IMPL = new ValidatorImpl();
+    private static final Validate VALIDATOR_IMPL = new Validate();
     private static final Reader READER = new Reader();
+
+//    private static PhoneNumber instance;
+//    private PhoneNumber(){}
+//    public static LazyInitializedSingleton getInstance(){ // #3
+//        if(instance == null){		//если объект еще не создан
+//            instance = new LazyInitializedSingleton();	//создать новый объект
+//        }
+//        return instance;		// вернуть ранее созданный объект
+//    }
 
     public List<String> findPhoneNumbers() {
         final List<String> numbers = new ArrayList<>();
