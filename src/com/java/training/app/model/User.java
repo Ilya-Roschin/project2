@@ -20,17 +20,17 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.numbers = numbers;
-        this.role = role.toString();
+        this.role = role;
     }
 
-    public User(final long id, final UserRole role, final String firstName, final String lastName,
+    public User(final long id, final String role, final String firstName, final String lastName,
                 final String email, final List<String> numbers) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.numbers = numbers;
-        this.role = role.toString();
+        this.role = role;
     }
 
     @Override

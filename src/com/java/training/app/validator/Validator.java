@@ -1,9 +1,7 @@
 package com.java.training.app.validator;
 
+@FunctionalInterface
 public interface Validator {
 
-    boolean validateNumber(final String number);
-
-    boolean validateEmail(final String email);
-
+    boolean validate(final String input);
 }

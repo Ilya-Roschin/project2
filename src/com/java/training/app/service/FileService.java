@@ -1,5 +1,6 @@
 package com.java.training.app.service;
 
+import com.java.training.app.exception.FileServiceException;
 import com.java.training.app.model.User;
 
 import java.io.File;
@@ -71,15 +72,15 @@ public class FileService {
     }
 
     public boolean deleteUser(final String firstName) throws IOException {
+        boolean deleted = false;
         final List<User> users = findAllUsers();
         if (users.removeIf(user -> firstName.equals(user.getFirstName()))) {
             deleteFile(FILE_PATH);
             createNewFileTxt();
             addUsersToFile(users);
-            return true;
-        } else {
-            return false;
+            deleted = true;
         }
+        return deleted;
     }
 
     public void readFile() {
@@ -89,10 +90,10 @@ public class FileService {
     private List<String> fileToStringList(final String fileName) {
         try (final Stream<String> stream = Files.lines(Paths.get(fileName))) {
             return stream.collect(Collectors.toList());
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (final IOException e) {
+            throw new FileServiceException("File with this " + fileName + "not found.", e.getCause());
         }
-        // TODO: 10.10.2021 исправить Exception и return
-        return null;
+
     }
+    // TODO: 14.10.2021 разделить на UserService и FileService
 }

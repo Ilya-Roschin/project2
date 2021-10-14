@@ -1,7 +1,5 @@
 package com.java.training.app.reader;
 
-import com.java.training.app.service.FileService;
-
 import java.util.Scanner;
 
 public class Reader {

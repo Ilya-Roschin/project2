@@ -1,14 +1,15 @@
 package com.java.training.app.service;
 
 import com.java.training.app.reader.Reader;
-import com.java.training.app.validator.impl.ValidatorImpl;
+import com.java.training.app.validator.Validator;
+import com.java.training.app.validator.impl.NumberValidator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PhoneNumberService {
 
-    private static final ValidatorImpl VALIDATOR_IMPL = new ValidatorImpl();
+    private static final Validator NUMBER_VALIDATOR = new NumberValidator();
     private static final Reader READER = Reader.getInstance();
     private static PhoneNumberService instance;
 
@@ -22,13 +23,12 @@ public class PhoneNumberService {
         return instance;
     }
 
-    public List<String> findPhoneNumbers() {
+    public List<String> inputPhoneNumbers() {
         final List<String> numbers = new ArrayList<>();
         int amountOfNumbers = enterAmountOfPhoneNumbers();
-
         while (amountOfNumbers > 0) {
             String number = READER.readLine("Enter phone number: ");
-            while (!VALIDATOR_IMPL.validateNumber(number)) {
+            while (!NUMBER_VALIDATOR .validate(number)) {
                 number = READER.readLine("invalid number. Try again:");
             }
             numbers.add(number);
