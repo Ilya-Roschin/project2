@@ -5,7 +5,7 @@ import com.java.training.app.reader.Reader;
 import com.java.training.app.service.FileService;
 import com.java.training.app.service.PhoneNumberService;
 import com.java.training.app.service.UserRoleService;
-import com.java.training.app.validator.impl.Validate;
+import com.java.training.app.validator.impl.ValidatorImpl;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,11 +13,22 @@ import java.util.Optional;
 
 public class ApplicationMenu {
 
-    private static final PhoneNumberService PHONE_NUMBER_SERVICE = new PhoneNumberService();
-    private static final Reader READER = new Reader();
-    private static final FileService FILE_SERVICE = new FileService();
-    private static final UserRoleService USER_ROLE_SERVICE = new UserRoleService();
-    private static final Validate VALIDATOR_IMPL = new Validate();
+    private static final PhoneNumberService PHONE_NUMBER_SERVICE = PhoneNumberService.getInstance();
+    private static final Reader READER = Reader.getInstance();
+    private static final FileService FILE_SERVICE = FileService.getInstance();
+    private static final UserRoleService USER_ROLE_SERVICE = UserRoleService.getInstance();
+    private static final ValidatorImpl VALIDATOR_IMPL = new ValidatorImpl();
+    private static ApplicationMenu instance;
+
+    private ApplicationMenu() {
+    }
+
+    public static ApplicationMenu getInstance() {
+        if (instance == null) {
+            instance = new ApplicationMenu();
+        }
+        return instance;
+    }
 
     public void addUser() throws IOException {
         String role = READER.readLine("input User role: ");

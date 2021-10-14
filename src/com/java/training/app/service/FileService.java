@@ -17,6 +17,17 @@ import java.util.stream.Stream;
 public class FileService {
 
     private static final String FILE_PATH = "resources\\storage.txt";
+    private static FileService instance;
+
+    private FileService() {
+    }
+
+    public static FileService getInstance() {
+        if (instance == null) {
+            instance = new FileService();
+        }
+        return instance;
+    }
 
     public List<User> findAllUsers() {
         final List<String> text = fileToStringList(FILE_PATH);

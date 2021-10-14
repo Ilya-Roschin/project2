@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 public class Menu {
 
-    private static final FileService FILE_SERVICE = new FileService();
-    private static final ApplicationMenu APPLICATION_MENU = new ApplicationMenu();
+    private static final FileService FILE_SERVICE = FileService.getInstance();
+    private static final ApplicationMenu APPLICATION_MENU = ApplicationMenu.getInstance();
 
     public static void run() {
         final Menu menu = new Menu();
