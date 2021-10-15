@@ -5,6 +5,9 @@ import com.java.training.app.model.UserRole;
 import com.java.training.app.reader.Reader;
 import com.java.training.app.service.FileService;
 import com.java.training.app.service.PhoneNumberService;
+import com.java.training.app.userInput.UserInput;
+import com.java.training.app.userInput.impl.InputEmail;
+import com.java.training.app.userInput.impl.InputRole;
 import com.java.training.app.validator.Validator;
 import com.java.training.app.validator.impl.EmailValidator;
 
@@ -31,22 +34,16 @@ public class ServiceMenu {
     }
 
     public void addUser() throws IOException {
-
-        String role = READER.readLine("input User role: ");
-        while (!UserRole.isRole(role)) {
-            role = READER.readLine("invalid role. Enter role again:");
-            // TODO: 14.10.2021 предоставить список ролей или выбор ролей
-        }
+        final UserInput inputRole = new InputRole();
+        final String role = inputRole.input();
+        // TODO: 14.10.2021 предоставить список ролей или выбор ролей
         final String firstName = READER.readLine("input first name: ");
         final String lastName = READER.readLine("input Last name: ");
-        String email = READER.readLine("input new Email: ");
-        while (!VALIDATOR_EMAIL.validate(email)) {
-            email = READER.readLine("invalid email. Enter email again:");
-        }
+        final UserInput emailInput = new InputEmail();
+        final String email = emailInput.input();
         final List<String> numbers = PHONE_NUMBER_SERVICE.inputPhoneNumbers();
         final User user = new User(role, firstName, lastName, email, numbers);
         FILE_SERVICE.addUserToFile(user);
-        // TODO: 14.10.2021 сделать как на 45 строке+ использоать паттерн СТРАТЕГИЯ!!!
     }
 
     public void findUser() {
