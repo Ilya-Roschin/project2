@@ -4,7 +4,6 @@ import com.java.training.app.reader.Reader;
 import com.java.training.app.userInput.UserInput;
 import com.java.training.app.validator.Validator;
 import com.java.training.app.validator.impl.EmailValidator;
-import com.java.training.app.validator.impl.NumberValidator;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ public class InputEmail implements UserInput {
     private static final Reader READER = Reader.getInstance();
 
     @Override
-    public String input() {
+    public String inputString() {
         return inputEmail();
     }
 

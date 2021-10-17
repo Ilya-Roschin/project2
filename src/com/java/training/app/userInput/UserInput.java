@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface UserInput {
 
-    String input();
+    String inputString();
     List<String> inputList();
 }

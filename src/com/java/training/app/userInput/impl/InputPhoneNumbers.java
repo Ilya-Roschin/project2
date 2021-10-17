@@ -14,7 +14,7 @@ public class InputPhoneNumbers implements UserInput {
     private static final Reader READER = Reader.getInstance();
 
     @Override
-    public String input() {
+    public String inputString() {
         return null;
     }
 

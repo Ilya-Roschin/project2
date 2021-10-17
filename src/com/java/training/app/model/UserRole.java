@@ -4,13 +4,13 @@ public enum UserRole {
     USER,
     ADMINISTRATOR;
 
-    public static boolean isRole(final String userRole) {
+    public boolean isRole(final String userRole) {
+        boolean result = false;
         for (final UserRole role : UserRole.values()) {
             if (role.name().equals(userRole)) {
-                return true;
+                result = true;
             }
         }
-        return false;
-        // TODO: 14.10.2021 переписать или сделать через стримы
+        return result;
     }
 }

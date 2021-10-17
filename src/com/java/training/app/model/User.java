@@ -13,6 +13,8 @@ public class User {
     private final String lastName;
     private final String email;
     private final List<String> numbers;
+    private final static String SEMICOLON = ";";
+    private final static String COMMA = ",";
 
     public User(final String role, final String firstName, final String lastName, final String email, final List<String> numbers) {
         this.id = UUID.randomUUID().getMostSignificantBits();
@@ -35,9 +37,10 @@ public class User {
 
     @Override
     public String toString() {
-        final StringBuilder text = new StringBuilder(role + ";" +  firstName + ";" + lastName + ";" + email + ";");
+        final StringBuilder text = new StringBuilder(role + SEMICOLON +  firstName + SEMICOLON
+                + lastName + SEMICOLON + email + SEMICOLON);
         for (final String element : numbers) {
-            text.append(element).append(",");
+            text.append(element).append(COMMA);
         }
         text.deleteCharAt(text.length() - 1);
         text.append("\n");

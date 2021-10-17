@@ -2,17 +2,18 @@ package com.java.training.app.userInput.impl;
 
 import com.java.training.app.model.UserRole;
 import com.java.training.app.reader.Reader;
+import com.java.training.app.service.UserRoleService;
 import com.java.training.app.userInput.UserInput;
-
 
 import java.util.List;
 
 public class InputRole implements UserInput {
 
     private static final Reader READER = Reader.getInstance();
+    private static final UserRoleService USER_ROLE_SERVICE = UserRoleService.getInstance();
 
     @Override
-    public String input() {
+    public String inputString() {
         return inputRole();
     }
 
@@ -22,10 +23,8 @@ public class InputRole implements UserInput {
     }
 
     private String inputRole() {
-        String role = READER.readLine("input User role: ");
-        while (!UserRole.isRole(role)) {
-            role = READER.readLine("invalid role. Enter role again:");
-    }
+        USER_ROLE_SERVICE.printRoleMenu();
+        String role = USER_ROLE_SERVICE.choseRole();
         return role;
     }
 }
