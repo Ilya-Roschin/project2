@@ -4,8 +4,10 @@ import com.java.training.app.model.User;
 import com.java.training.app.reader.Reader;
 import com.java.training.app.service.PhoneNumberService;
 import com.java.training.app.service.UserService;
-import com.java.training.app.userInput.UserInput;
+import com.java.training.app.userInput.InputList;
+import com.java.training.app.userInput.InputString;
 import com.java.training.app.userInput.impl.InputEmail;
+import com.java.training.app.userInput.impl.InputPhoneNumbers;
 import com.java.training.app.userInput.impl.InputRole;
 
 import java.io.IOException;
@@ -15,7 +17,6 @@ import java.util.stream.Collectors;
 
 public class ServiceMenu {
 
-    private static final PhoneNumberService PHONE_NUMBER_SERVICE = PhoneNumberService.getInstance();
     private static final Reader READER = Reader.getInstance();
     private static final UserService USER_SERVICE = UserService.getInstance();
     private static ServiceMenu instance;
@@ -31,13 +32,14 @@ public class ServiceMenu {
     }
 
     public void addUser() throws IOException {
-        final UserInput inputRole = new InputRole();
-        final String role = inputRole.inputString();
+        final InputString roleInput = new InputRole();
+        final String role = roleInput.inputString();
         final String firstName = READER.readLine("input first name: ");
         final String lastName = READER.readLine("input Last name: ");
-        final UserInput emailInput = new InputEmail();
+        final InputString emailInput = new InputEmail();
         final String email = emailInput.inputString();
-        final List<String> numbers = PHONE_NUMBER_SERVICE.inputPhoneNumbers();
+        final InputList numbersInput = new InputPhoneNumbers();
+        final List<String> numbers = numbersInput.inputList();
         final User user = new User(role, firstName, lastName, email, numbers);
         USER_SERVICE.addUserToFile(user);
     }

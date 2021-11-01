@@ -1,22 +1,17 @@
 package com.java.training.app.userInput.impl;
 
 import com.java.training.app.reader.Reader;
-import com.java.training.app.userInput.UserInput;
+import com.java.training.app.userInput.InputList;
 import com.java.training.app.validator.Validator;
 import com.java.training.app.validator.impl.NumberValidator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InputPhoneNumbers implements UserInput {
+public class InputPhoneNumbers implements InputList {
 
     private static final Validator NUMBER_VALIDATOR = new NumberValidator();
     private static final Reader READER = Reader.getInstance();
-
-    @Override
-    public String inputString() {
-        return null;
-    }
 
     @Override
     public List<String> inputList() {
@@ -47,4 +42,6 @@ public class InputPhoneNumbers implements UserInput {
             }
         }
     }
+
+
 }

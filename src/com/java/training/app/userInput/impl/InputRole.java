@@ -1,13 +1,13 @@
 package com.java.training.app.userInput.impl;
 
-import com.java.training.app.model.UserRole;
 import com.java.training.app.reader.Reader;
 import com.java.training.app.service.UserRoleService;
-import com.java.training.app.userInput.UserInput;
+import com.java.training.app.userInput.InputList;
+import com.java.training.app.userInput.InputString;
 
 import java.util.List;
 
-public class InputRole implements UserInput {
+public class InputRole implements InputString {
 
     private static final Reader READER = Reader.getInstance();
     private static final UserRoleService USER_ROLE_SERVICE = UserRoleService.getInstance();
@@ -17,14 +17,8 @@ public class InputRole implements UserInput {
         return inputRole();
     }
 
-    @Override
-    public List<String> inputList() {
-        return null;
-    }
-
     private String inputRole() {
         USER_ROLE_SERVICE.printRoleMenu();
-        String role = USER_ROLE_SERVICE.choseRole();
-        return role;
+        return USER_ROLE_SERVICE.choseRole();
     }
 }

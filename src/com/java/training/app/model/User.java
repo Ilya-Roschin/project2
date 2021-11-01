@@ -13,8 +13,8 @@ public class User {
     private final String lastName;
     private final String email;
     private final List<String> numbers;
-    private final static String SEMICOLON = ";";
-    private final static String COMMA = ",";
+    private static final String SEMICOLON = ";";
+    private static final String COMMA = ",";
 
     public User(final String role, final String firstName, final String lastName, final String email, final List<String> numbers) {
         this.id = UUID.randomUUID().getMostSignificantBits();
